@@ -7,5 +7,6 @@ dhcp_packages:
 dhcp_config_dir: /etc/dhcp
 
 dhcp_config: /etc/dhcp/dhcpd.conf
+dhcpd6_config: /etc/dhcp/dhcpd6.conf
 
 dhcp_service: dhcpd

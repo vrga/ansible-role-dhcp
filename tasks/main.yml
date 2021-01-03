@@ -35,6 +35,17 @@
   notify: restart dhcp
   tags: dhcp
 
+- name: Install custom includes IPv6
+  template:
+    src: "{{ item }}"
+    dest: "{{ dhcp_config_dir }}/{{ ( item | basename ).split('.j2')[0] }}"
+    owner: root
+    group: root
+    mode: 0644
+  with_items: "{{ dhcpd6_custom_includes }}"
+  when: dhcpd6_custom_includes is defined
+  notify: restart dhcp
+  tags: dhcp
 - name: Install includes
   copy:
     src: "{{ item }}"
@@ -59,6 +70,17 @@
     group: root
     mode: 0644
     validate: 'dhcpd -t -cf %s'
+  notify: restart dhcp
+  tags: dhcp
+
+- name: Install config file
+  template:
+    src: etc_dhcp_dhcpd6.conf.j2
+    dest: "{{ dhcpd6_config }}"
+    owner: root
+    group: root
+    mode: 0644
+    validate: 'dhcpd -6 -t -cf %s'
   notify: restart dhcp
   tags: dhcp
 

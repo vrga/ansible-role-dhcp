@@ -1,0 +1,17 @@
+{% if dhcpd6_global_includes is defined %}
+    #
+    # Includes
+    #
+    {% for include in dhcpd6_global_includes %}
+        include "{{ dhcp_config_dir }}/{{ include | basename }}";
+    {% endfor %}
+{% endif %}
+
+{% if dhcpd6_custom_includes is defined%}
+#
+# Custom Includes
+#
+{% for include in dhcpd6_custom_includes %}
+    include "{{ dhcp_config_dir }}/{{ ( include | basename ).split('.j2')[0] }}";
+{% endfor %}
+{% endif %}
